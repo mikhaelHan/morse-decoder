@@ -1,62 +1,28 @@
-const MORSE_TABLE = {
-    '.-': 'a',
-    '-...': 'b',
-    '-.-.': 'c',
-    '-..': 'd',
-    '.': 'e',
-    '..-.': 'f',
-    '--.': 'g',
-    '....': 'h',
-    '..': 'i',
-    '.---': 'j',
-    '-.-': 'k',
-    '.-..': 'l',
-    '--': 'm',
-    '-.': 'n',
-    '---': 'o',
-    '.--.': 'p',
-    '--.-': 'q',
-    '.-.': 'r',
-    '...': 's',
-    '-': 't',
-    '..-': 'u',
-    '...-': 'v',
-    '.--': 'w',
-    '-..-': 'x',
-    '-.--': 'y',
-    '--..': 'z',
-    '.----': '1',
-    '..---': '2',
-    '...--': '3',
-    '....-': '4',
-    '.....': '5',
-    '-....': '6',
-    '--...': '7',
-    '---..': '8',
-    '----.': '9',
-    '-----': '0',
-};
+const MORSE_TABLE = require('./data');
 
-function decode(expr) {
-    let res = '';
-    let massExpr = expr.split('');
-    for (let i = 0; i < massExpr.length; i += 10) {
-        let chunk = massExpr.slice(i, i + 10);
-        if (chunk.join('') === '**********') { res += ' ' }
+const decode = (expr) => {
+
+    let fraser = '';
+
+    let argMass = expr.split('');
+    for (let i = 0; i < argMass.length; i += 10) {
+        let chunk = argMass.slice(i, i + 10);
+        if (chunk.join('') === '**********') { fraser += ' ' }
         else {
-            let cod = '';
+            let code = '';
             for (let k = 0; k < chunk.length; k += 2) {
                 let word = chunk.slice(k, k + 2);
                 if (word.join('') === '00') { continue }
-                else if (word.join('') === '10') { cod += '.' }
-                else if (word.join('') === '11') { cod += '-' }
+                else if (word.join('') === '10') { code += '.' }
+                else if (word.join('') === '11') { code += '-' }
             }
-            res += MORSE_TABLE[cod];
+            fraser += MORSE_TABLE[code];
         }
     }
-    return res
+    return fraser
 }
 
 module.exports = {
     decode
 }
+
